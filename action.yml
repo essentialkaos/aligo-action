@@ -50,6 +50,6 @@ runs:
       shell: bash
       run: |
         echo "Running Aligo…"
-        pushd ${{inputs.path}}
+        pushd ${{inputs.path}} &> /dev/null
         $GITHUB_ACTION_PATH/aligo check ${{inputs.files}}
-        popd
+        popd &> /dev/null
