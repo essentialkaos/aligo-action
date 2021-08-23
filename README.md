@@ -24,12 +24,30 @@ jobs:
     name: Aligo
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v2
+    env:
+      SRC_DIR: src/github.com/${{ github.repository }}
 
-      - name: Check dockerfiles with Aligo
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.17.x'
+        id: go
+
+      - name: Setup PATH
+        run: |
+          echo "GOPATH=${{ github.workspace }}" >> "$GITHUB_ENV"
+          echo "GOBIN=${{ github.workspace }}/bin" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{env.SRC_DIR}}
+
+      - name: Check Golang sources with Aligo
         uses: essentialkaos/aligo-action@v1
+        working-directory: ${{env.SRC_DIR}}
         with:
           path: ./...
 
