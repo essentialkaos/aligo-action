@@ -11,6 +11,10 @@ inputs:
     description: "Path to directory with sources"
     required: true
 
+  files:
+    description: "Files or directories to check"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -46,4 +50,6 @@ runs:
       shell: bash
       run: |
         echo "Running Aligo…"
-        $GITHUB_ACTION_PATH/aligo check ${{inputs.path}}
+        pushd ${{inputs.path}}
+        $GITHUB_ACTION_PATH/aligo check ${{inputs.files}}
+        popd
