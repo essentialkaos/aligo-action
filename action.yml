@@ -1,0 +1,49 @@
+name: "EK Aligo"
+description: "Action for checking Golang struct alignment"
+author: "ESSENTIALKAOS"
+
+branding:
+  icon: 'align-left'
+  color: 'white'
+
+inputs:
+  path:
+    description: "Path to directory with sources"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - id: aligo-install
+      name: Install Aligo 
+      shell: bash
+      run: |
+        echo "::group::Downloading Aligo…"
+        aligo_url="https://apps.kaos.st/aligo/latest/"
+        if [[ "$RUNNER_OS" == "Linux" ]] ; then
+          wget -O $GITHUB_ACTION_PATH/aligo "${aligo_url}/linux/x86_64/aligo" 2>&1
+        elif [[ "$RUNNER_OS" == "macOS" ]] ; then
+          wget -O $GITHUB_ACTION_PATH/aligo "${aligo_url}/macosx/x86_64/aligo" 2>&1
+        else
+          echo "::endgroup::"
+          echo "$RUNNER_OS is not supported"
+          exit 1  
+        fi
+        echo "::endgroup::"
+
+        chmod +x $GITHUB_ACTION_PATH/aligo
+
+    - id: aligo-version-print
+      name: Print Aligo version info
+      shell: bash
+      run: |
+        echo "::group::Print Aligo version…"
+        $GITHUB_ACTION_PATH/aligo --version
+        echo "::endgroup::"
+
+    - id: aligo-check
+      name: Check Golang sources with Aligo
+      shell: bash
+      run: |
+        echo "Running Aligo…"
+        $GITHUB_ACTION_PATH/aligo check ${{inputs.path}}
