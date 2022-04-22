@@ -31,7 +31,8 @@ runs:
         key: ${{runner.os}}-aligo-v${{inputs.version}}
 
     - id: aligo-install
-      name: Install Aligo 
+      name: Install Aligo
+      if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         echo "::group::Downloading Aligo…"
@@ -44,7 +45,7 @@ runs:
         else
           echo "::endgroup::"
           echo "$RUNNER_OS is not supported"
-          exit 1  
+          exit 1
         fi
         echo "::endgroup::"
 
