@@ -15,19 +15,32 @@ inputs:
     description: "Files or directories to check"
     required: true
 
+  version:
+    description: "Version of Aligo"
+    required: false
+    default: "1.5.3"
+
 runs:
   using: "composite"
   steps:
+    - id: aligo-bin-cache
+      name: Cache aligo binaries
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/aligo
+        key: ${{runner.os}}-aligo-v${{inputs.version}}
+
     - id: aligo-install
       name: Install Aligo 
       shell: bash
       run: |
         echo "::group::Downloading Aligo…"
-        aligo_url="https://apps.kaos.st/aligo/latest/"
+        mkdir -p ~/.cache
+        aligo_url="https://apps.kaos.st/aligo/${{inputs.version}}/"
         if [[ "$RUNNER_OS" == "Linux" ]] ; then
-          wget -O $GITHUB_ACTION_PATH/aligo "${aligo_url}/linux/x86_64/aligo" 2>&1
+          wget -O ~/.cache/aligo "${aligo_url}/linux/x86_64/aligo" 2>&1
         elif [[ "$RUNNER_OS" == "macOS" ]] ; then
-          wget -O $GITHUB_ACTION_PATH/aligo "${aligo_url}/macosx/x86_64/aligo" 2>&1
+          wget -O ~/.cache/aligo "${aligo_url}/macosx/x86_64/aligo" 2>&1
         else
           echo "::endgroup::"
           echo "$RUNNER_OS is not supported"
@@ -35,14 +48,14 @@ runs:
         fi
         echo "::endgroup::"
 
-        chmod +x $GITHUB_ACTION_PATH/aligo
+        chmod +x ~/.cache/aligo
 
     - id: aligo-version-print
       name: Print Aligo version info
       shell: bash
       run: |
         echo "::group::Print Aligo version…"
-        $GITHUB_ACTION_PATH/aligo --version
+        ~/.cache/aligo --version
         echo "::endgroup::"
 
     - id: aligo-check
@@ -51,5 +64,5 @@ runs:
       run: |
         echo "Running Aligo…"
         pushd ${{inputs.path}} &> /dev/null
-        $GITHUB_ACTION_PATH/aligo check ${{inputs.files}}
+        ~/.cache/aligo check ${{inputs.files}}
         popd &> /dev/null

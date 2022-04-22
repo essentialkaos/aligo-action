@@ -53,6 +53,14 @@ jobs:
 
 ```
 
+### Options
+
+| Option | Description | Value |
+|--------|-------------|--------|
+| `path` | Path to directory with sources | _Path_ |
+| `files` | Files or directories to check | _List_ |
+| `version` | Aligo version | _Version in semver notation_ |
+
 ### License
 
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
