@@ -24,11 +24,11 @@ runs:
   using: "composite"
   steps:
     - id: aligo-bin-cache
-      name: Cache aligo binaries
+      name: Cache aligo binary
       uses: actions/cache@v3
       with:
         path: ~/.cache/aligo
-        key: ${{runner.os}}-aligo-v${{inputs.version}}
+        key: ${{runner.os}}-ek-aligo-action-v${{inputs.version}}
 
     - id: aligo-install
       name: Install Aligo
