@@ -61,7 +61,7 @@ runs:
       run: |
         # [aligo-version-print]
 
-        echo "::group::\033[34mPrint Aligo version…\033[0m"
+        echo -e "::group::\033[34mPrint Aligo version…\033[0m"
         ~/.cache/aligo --version
         echo "::endgroup::"
 
@@ -71,7 +71,7 @@ runs:
       run: |
         # [aligo-check]
 
-        echo "\033[34mRunning Aligo…\033[0m"
+        echo -e "\033[34mRunning Aligo…\033[0m"
 
         pushd ${{inputs.path}} &> /dev/null
         ~/.cache/aligo check ${{inputs.files}}
