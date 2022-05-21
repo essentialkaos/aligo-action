@@ -42,9 +42,7 @@ runs:
 
         mkdir -p ~/.cache
 
-        which aligo
-
-        cp $GOPATH/bin/aligo ~/.cache/aligo
+        cp /home/runner/go/bin/aligo ~/.cache/aligo
 
     - id: aligo-version-print
       name: Print Aligo version info
