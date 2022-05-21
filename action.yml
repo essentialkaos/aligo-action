@@ -42,6 +42,8 @@ runs:
 
         mkdir -p ~/.cache
 
+        which aligo
+
         cp $GOPATH/bin/aligo ~/.cache/aligo
 
     - id: aligo-version-print
