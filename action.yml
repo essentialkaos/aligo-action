@@ -63,7 +63,7 @@ runs:
 
         echo -e "::group::\033[34mPrint Aligo version…\033[0m"
         ~/.cache/aligo --version
-        go version
+        go env
         echo "::endgroup::"
 
     - id: aligo-check
