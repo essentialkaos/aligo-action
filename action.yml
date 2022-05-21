@@ -28,7 +28,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: ~/.cache/aligo
-        key: ${{runner.os}}-ek-aligo-action-v${{inputs.version}}
+        key: ${{runner.os}}-ek-aligo-action-bin-v${{inputs.version}}
 
     - id: aligo-install
       name: Install Aligo
