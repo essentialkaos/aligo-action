@@ -37,23 +37,12 @@ runs:
       run: |
         # [aligo-install]
 
-        echo -e "::group::\033[34mDownloading Shellcheck…\033[0m"
+        echo -e "::group::\033[34mBuilding Aligo…\033[0m"
+        go install github.com/essentialkaos/aligo@v${{inputs.version}}
 
         mkdir -p ~/.cache
-        aligo_url="https://apps.kaos.st/aligo/${{inputs.version}}/"
 
-        if [[ "$RUNNER_OS" == "Linux" ]] ; then
-          wget -O ~/.cache/aligo "${aligo_url}/linux/x86_64/aligo" 2>&1
-        elif [[ "$RUNNER_OS" == "macOS" ]] ; then
-          wget -O ~/.cache/aligo "${aligo_url}/macosx/x86_64/aligo" 2>&1
-        else
-          echo "::endgroup::"
-          echo "::error ::$RUNNER_OS is not supported"
-          exit 1
-        fi
-        echo "::endgroup::"
-
-        chmod +x ~/.cache/aligo
+        cp $GOPATH/bin/aligo ~/.cache/aligo
 
     - id: aligo-version-print
       name: Print Aligo version info
@@ -63,7 +52,6 @@ runs:
 
         echo -e "::group::\033[34mPrint Aligo version…\033[0m"
         ~/.cache/aligo --version
-        go env
         echo "::endgroup::"
 
     - id: aligo-check
