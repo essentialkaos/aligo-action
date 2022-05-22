@@ -19,26 +19,19 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  SRC_DIR: src/github.com/${{ github.repository }}
+
 jobs:
   Aligo:
     name: Aligo
     runs-on: ubuntu-latest
-
-    env:
-      SRC_DIR: src/github.com/${{ github.repository }}
 
     steps:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: '1.17.x'
-        id: go
-
-      - name: Setup PATH
-        run: |
-          echo "GOPATH=${{ github.workspace }}" >> "$GITHUB_ENV"
-          echo "GOBIN=${{ github.workspace }}/bin" >> "$GITHUB_ENV"
-          echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
 
       - name: Checkout
         uses: actions/checkout@v3
