@@ -38,11 +38,14 @@ runs:
         # [aligo-install]
 
         echo -e "::group::\033[34mBuilding Aligo…\033[0m"
+
         go install github.com/essentialkaos/aligo@v${{inputs.version}}
 
         mkdir -p ~/.cache
 
         cp "$(which aligo)" ~/.cache/aligo
+
+        echo "::endgroup::"
 
     - id: aligo-version-print
       name: Print Aligo version info
