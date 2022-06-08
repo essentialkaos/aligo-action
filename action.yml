@@ -23,16 +23,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: aligo-bin-cache
-      name: Cache aligo binary
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/aligo
-        key: ${{runner.os}}-ek-aligo-action-bin-v${{inputs.version}}
-
     - id: aligo-install
       name: Install Aligo
-      if: steps.aligo-bin-cache.outputs.cache-hit != 'true'
       shell: bash
       run: |
         # [aligo-install]
@@ -42,7 +34,6 @@ runs:
         go install github.com/essentialkaos/aligo@v${{inputs.version}}
 
         mkdir -p ~/.cache
-
         cp "$(which aligo)" ~/.cache/aligo
 
         echo "::endgroup::"
