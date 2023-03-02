@@ -18,7 +18,7 @@ inputs:
   version:
     description: "Version of Aligo"
     required: false
-    default: "1.5.3"
+    default: "1.6.0"
 
 runs:
   using: "composite"
