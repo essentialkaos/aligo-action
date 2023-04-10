@@ -7,18 +7,18 @@ branding:
   color: 'white'
 
 inputs:
-  path:
-    description: "Path to directory with sources"
-    required: true
-
   files:
     description: "Files or directories to check"
     required: true
 
+  path:
+    description: "Path to directory with sources"
+    required: false
+
   version:
     description: "Version of Aligo"
     required: false
-    default: "1.6.0"
+    default: "latest"
 
 runs:
   using: "composite"
@@ -56,6 +56,10 @@ runs:
 
         echo -e "\033[34mRunning Aligo…\033[0m"
 
-        pushd ${{inputs.path}} &> /dev/null
-        ~/.cache/aligo check ${{inputs.files}}
-        popd &> /dev/null
+        if [[ -n "${{inputs.path}}" ]] ; then
+          pushd ${{inputs.path}} &> /dev/null
+          ~/.cache/aligo check ${{inputs.files}}
+          popd &> /dev/null
+        else
+          ~/.cache/aligo check ${{inputs.files}}
+        fi

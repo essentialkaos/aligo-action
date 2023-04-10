@@ -19,9 +19,6 @@ on:
   pull_request:
     branches: [master]
 
-env:
-  SRC_DIR: src/github.com/${{ github.repository }}
-
 jobs:
   Aligo:
     name: Aligo
@@ -31,17 +28,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.17.x'
+          go-version: '1.18.x'
 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          path: ${{env.SRC_DIR}}
 
       - name: Check Golang sources with Aligo
-        uses: essentialkaos/aligo-action@v1
+        uses: essentialkaos/aligo-action@v2
         with:
-          path: ${{env.SRC_DIR}}
           files: ./...
 
 ```
@@ -50,8 +44,8 @@ jobs:
 
 | Option | Description | Value |
 |--------|-------------|--------|
-| `path` | Path to directory with sources | _Path_ |
 | `files` | Files or directories to check | _List_ |
+| `path` | Path to directory with sources | _Path_ |
 | `version` | Aligo version | _Version in semver notation_ |
 
 ### License
