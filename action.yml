@@ -31,7 +31,13 @@ runs:
 
         echo -e "::group::\033[34mBuilding Aligo…\033[0m"
 
-        go install github.com/essentialkaos/aligo@v${{inputs.version}}
+        version=${{inputs.version}}
+
+        if [[ "$version" != "latest" ]] ; then
+          version="v$version"
+        fi
+
+        go install github.com/essentialkaos/aligo@$version
 
         mkdir -p ~/.cache
         cp "$(which aligo)" ~/.cache/aligo
