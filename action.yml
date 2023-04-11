@@ -18,11 +18,21 @@ inputs:
   version:
     description: "Version of Aligo"
     required: false
-    default: "latest"
+    default: "1.6.1"
 
 runs:
   using: "composite"
   steps:
+    - id: aligo-validate-options
+      name: Options validation
+      shell: bash
+      run: |
+        # [aligo-validate-options]
+
+        if [[ -n "${{inputs.path}}" && ! -d "${{inputs.path}}" ]] ; then
+          echo "::error::Directory ${{inputs.path}} doesn't exist"
+        fi
+
     - id: aligo-install
       name: Install Aligo
       shell: bash
@@ -37,7 +47,10 @@ runs:
           version="v$version"
         fi
 
-        go install github.com/essentialkaos/aligo@$version
+        if ! go install github.com/essentialkaos/aligo@$version ; then
+          echo "::endgroup::"
+          echo "::error::Can't install aligo (version: $version)"
+        fi
 
         mkdir -p ~/.cache
         cp "$(which aligo)" ~/.cache/aligo
@@ -63,9 +76,7 @@ runs:
         echo -e "\033[34mRunning Aligo…\033[0m"
 
         if [[ -n "${{inputs.path}}" ]] ; then
-          pushd ${{inputs.path}} &> /dev/null
-          ~/.cache/aligo check ${{inputs.files}}
-          popd &> /dev/null
-        else
-          ~/.cache/aligo check ${{inputs.files}}
+          cd ${{inputs.path}}
         fi
+
+        ~/.cache/aligo check ${{inputs.files}}
