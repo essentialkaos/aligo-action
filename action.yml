@@ -31,6 +31,7 @@ runs:
 
         if [[ -n "${{inputs.path}}" && ! -d "${{inputs.path}}" ]] ; then
           echo "::error::Directory ${{inputs.path}} doesn't exist"
+          exit 1
         fi
 
     - id: aligo-install
@@ -50,6 +51,7 @@ runs:
         if ! go install github.com/essentialkaos/aligo@$version ; then
           echo "::endgroup::"
           echo "::error::Can't install aligo (version: $version)"
+          exit 1
         fi
 
         mkdir -p ~/.cache
