@@ -2,7 +2,7 @@
 
 <br/>
 
-Action for checking scripts with [_Aligo_](https://kaos.sh/aligo).
+Action for checking scripts with [_aligo_](https://kaos.sh/aligo).
 
 ### Usage
 
