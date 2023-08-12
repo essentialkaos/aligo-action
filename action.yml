@@ -22,7 +22,7 @@ inputs:
   version:
     description: "Version of Aligo"
     required: false
-    default: "2.0.1"
+    default: "2.0.2"
 
 runs:
   using: "composite"
