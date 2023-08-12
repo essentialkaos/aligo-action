@@ -15,6 +15,10 @@ inputs:
     description: "Path to directory with sources"
     required: false
 
+  tags:
+    description: "Build tags"
+    required: false
+
   version:
     description: "Version of Aligo"
     required: false
@@ -81,4 +85,8 @@ runs:
           cd ${{inputs.path}}
         fi
 
-        ~/.cache/aligo check ${{inputs.files}}
+        if [[ -n "${{inputs.tags}}" ]] ; then
+          ~/.cache/aligo --tags "$tags" check ${{inputs.files}}
+        else
+          ~/.cache/aligo check ${{inputs.files}}
+        fi

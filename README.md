@@ -31,12 +31,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.18.x'
+          go-version: '1.21.x'
 
       - name: Check Golang sources with Aligo
         uses: essentialkaos/aligo-action@v2
         with:
           files: ./...
+          tags: unit,e2e
 
 ```
 
@@ -46,6 +47,7 @@ jobs:
 |--------|-------------|--------|
 | `files` | Files or directories to check | _List_ |
 | `path` | Path to directory with sources | _Path_ |
+| `tags` | Build tags | _Tags_ |
 | `version` | Aligo version | _Version in semver notation_ |
 
 ### License
