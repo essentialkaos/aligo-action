@@ -8,7 +8,7 @@ Action for checking scripts with [_aligo_](https://kaos.sh/aligo).
 
 Create file `.github/workflows/aligo.yml`.
 
-Add next code to it:
+Add next code to it or add job `Aligo` to your workflow:
 
 ```yml
 name: CI
@@ -48,7 +48,6 @@ jobs:
 | `files` | Files or directories to check | _List_ |
 | `path` | Path to directory with sources | _Path_ |
 | `tags` | Build tags | _Tags_ |
-| `version` | Aligo version | _Version in semver notation or `latest`_ |
 
 ### License
 

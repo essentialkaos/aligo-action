@@ -19,11 +19,6 @@ inputs:
     description: "Build tags"
     required: false
 
-  version:
-    description: "Version of Aligo"
-    required: false
-    default: "2.0.2"
-
 runs:
   using: "composite"
   steps:
@@ -46,20 +41,14 @@ runs:
 
         echo -e "::group::\033[34mBuilding Aligo…\033[0m"
 
-        version=${{inputs.version}}
-
-        if [[ "$version" != "latest" ]] ; then
-          version="v$version"
-        fi
-
-        if ! go install github.com/essentialkaos/aligo@$version ; then
+        if ! go install github.com/essentialkaos/aligo@$latest ; then
           echo "::endgroup::"
-          echo "::error::Can't install aligo (version: $version)"
+          echo "::error::Can't install the latest version of aligo"
           exit 1
         fi
 
-        mkdir -p ~/.cache
-        cp "$(which aligo)" ~/.cache/aligo
+        mkdir -p ~/.bin
+        cp "$(which aligo)" ~/.bin/aligo
 
         echo "::endgroup::"
 
@@ -69,8 +58,8 @@ runs:
       run: |
         # [aligo-version-print]
 
-        echo -e "::group::\033[34mPrint Aligo version…\033[0m"
-        ~/.cache/aligo --version
+        echo -e "::group::\033[34mPrint Aligo version info…\033[0m"
+        ~/.bin/aligo --version
         echo "::endgroup::"
 
     - id: aligo-check
@@ -86,7 +75,7 @@ runs:
         fi
 
         if [[ -n "${{inputs.tags}}" ]] ; then
-          ~/.cache/aligo --tags "$tags" check ${{inputs.files}}
+          ~/.bin/aligo --tags "$tags" check ${{inputs.files}}
         else
-          ~/.cache/aligo check ${{inputs.files}}
+          ~/.bin/aligo check ${{inputs.files}}
         fi
