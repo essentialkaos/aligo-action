@@ -48,7 +48,7 @@ jobs:
 | `files` | Files or directories to check | _List_ |
 | `path` | Path to directory with sources | _Path_ |
 | `tags` | Build tags | _Tags_ |
-| `version` | Aligo version | _Version in semver notation_ |
+| `version` | Aligo version | _Version in semver notation or `latest`_ |
 
 ### License
 
