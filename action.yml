@@ -41,7 +41,7 @@ runs:
 
         echo -e "::group::\033[34mBuilding Aligo…\033[0m"
 
-        if ! go install github.com/essentialkaos/aligo@$latest ; then
+        if ! go install github.com/essentialkaos/aligo@latest ; then
           echo "::endgroup::"
           echo "::error::Can't install the latest version of aligo"
           exit 1
