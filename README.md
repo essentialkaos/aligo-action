@@ -26,12 +26,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
-          go-version: '1.24.x'
+          go-version: 'stable'
 
       - name: Check Golang sources with Aligo
         uses: essentialkaos/aligo-action@v2
