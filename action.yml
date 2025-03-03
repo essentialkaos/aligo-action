@@ -59,7 +59,7 @@ runs:
         # [aligo-version-print]
 
         echo -e "::group::\033[34mPrint Aligo version info…\033[0m"
-        ~/.bin/aligo --version
+        ~/.bin/aligo -vv
         echo "::endgroup::"
 
     - id: aligo-check
