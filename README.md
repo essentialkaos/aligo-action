@@ -31,10 +31,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.21.x'
+          go-version: '1.24.x'
 
       - name: Check Golang sources with Aligo
         uses: essentialkaos/aligo-action@v2
+        continue-on-error: true
         with:
           files: ./...
           tags: unit,e2e
